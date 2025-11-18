@@ -1,5 +1,5 @@
 const crypto = require("crypto");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const { promisify } = require("util");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User.model");
