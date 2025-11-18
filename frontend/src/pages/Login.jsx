@@ -1,61 +1,38 @@
-// Login Page 
+// Login page 
 import { useState } from "react";
-import axios from "../api";
+import { useNavigate } from "react-router-dom";
+import API from "../api/axios";
 
 export default function Login() {
-  const [form, setForm] = useState({ email: "", password: "" });
-  const [message, setMessage] = useState("");
+  const [data, setData] = useState({ email: "", password: "" });
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setData({ ...data, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      const res = await axios.post("/login", form);
+      const res = await API.post("/auth/login", data);
 
-      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("accessToken", res.data.accessToken);
+      localStorage.setItem("refreshToken", res.data.refreshToken);
 
-      setMessage("Login successful");
-
-      setTimeout(() => {
-        window.location.href = "/dashboard";
-      }, 500);
-
+      navigate("/dashboard");
     } catch (err) {
-      setMessage(err.response?.data?.message || "Login failed");
+      alert(err.response?.data?.message || "Login failed");
     }
   };
 
   return (
-    <div style={{ maxWidth: "350px", margin: "50px auto" }}>
+    <div style={{ padding: "20px" }}>
       <h2>Login</h2>
-
       <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={form.email}
-          onChange={handleChange}
-          required
-        /><br/><br/>
-
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={form.password}
-          onChange={handleChange}
-          required
-        /><br/><br/>
-
-        <button type="submit">Login</button>
+        <input name="email" placeholder="Email" onChange={handleChange} /><br /><br />
+        <input name="password" type="password" placeholder="Password" onChange={handleChange} /><br /><br />
+        <button>Login</button>
       </form>
-
-      {message && <p>{message}</p>}
     </div>
   );
 }

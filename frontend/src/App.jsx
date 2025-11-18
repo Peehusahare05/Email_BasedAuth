@@ -1,8 +1,8 @@
-// App Routes File 
+// main router 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Signup from "./pages/Signup";
-import VerifyEmail from "./pages/VerifyEmail";
 import Login from "./pages/Login";
+import VerifiedSuccess from "./pages/VerifiedSuccess";
 import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -11,10 +11,9 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/signup" element={<Signup />} />
-        <Route path="/verify-email" element={<VerifyEmail />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/verified-success" element={<VerifiedSuccess />} />
 
-        {/* Protected Route */}
         <Route
           path="/dashboard"
           element={
