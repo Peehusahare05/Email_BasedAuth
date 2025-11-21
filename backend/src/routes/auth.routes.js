@@ -1,20 +1,24 @@
 const express = require("express");
 const router = express.Router();
-const authCtrl = require("../controllers/auth.controller");
 
-// Signup -> sends verification email
-router.post("/signup", authCtrl.signup);
+const authMiddleware = require("../middleware/auth.middleware");
 
-// Verify email (user clicks link which hits this)
-router.get("/verify-email", authCtrl.verifyEmail);
+// Import controller functions
+const { 
+  signup, 
+  login, 
+  verifyOtp, 
+  getMe, 
+  refresh, 
+  logout 
+} = require("../controllers/auth.controller");
 
-// Login -> returns access + refresh
-router.post("/login", authCtrl.login);
-
-// Refresh tokens
-router.post("/refresh", authCtrl.refresh);
-
-// Logout
-router.post("/logout", authCtrl.logout);
+// Routes
+router.post("/signup", signup);
+router.post("/login", login);
+router.post("/verify-otp", verifyOtp);
+router.get("/me", authMiddleware, getMe);
+router.post("/refresh", refresh);
+router.post("/logout", logout);
 
 module.exports = router;

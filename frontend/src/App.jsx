@@ -1,7 +1,9 @@
 // main router 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
+import VerifyOtp from "./pages/verifyOtp";   // ✅ IMPORT HERE
 import VerifiedSuccess from "./pages/VerifiedSuccess";
 import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -12,6 +14,10 @@ export default function App() {
       <Routes>
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
+
+        {/* ✅ FIX: Route must be INSIDE Routes */}
+        <Route path="/verify-otp" element={<VerifyOtp />} />
+
         <Route path="/verified-success" element={<VerifiedSuccess />} />
 
         <Route
